@@ -11,7 +11,7 @@ if not dotenv_loaded:
     print("⚠️  Warning: .env file not found. Make sure environment variables are set.")
 
 token = os.getenv("GITHUB_TOKEN")
-OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 repo_name = "Jyoti-Ashu-CG/release-note-agent"  # 🔁 Replace with actual owner/repo
 
 if not token:

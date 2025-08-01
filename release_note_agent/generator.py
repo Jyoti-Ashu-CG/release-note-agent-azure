@@ -4,26 +4,21 @@ from langchain.prompts import PromptTemplate
 
 class ReleaseNoteGenerator:
     def __init__(self, model_name=None, openai_api_key=None):
-        # Read Azure OpenAI environment variables
-        azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-        azure_deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT")
-        azure_api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2023-05-15")
-        openai_api_key = openai_api_key or os.getenv("AZURE_OPENAI_API_KEY")
+        # Use standard Azure OpenAI environment variables
+        azure_endpoint = os.getenv("OPENAI_API_BASE")  # e.g. https://YOUR-RESOURCE.openai.azure.com/
+        azure_deployment = model_name or os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME")
+        openai_api_key = openai_api_key or os.getenv("OPENAI_API_KEY")
 
-        # If using Azure, pass endpoint, deployment, and api_version
-        # For LangChain's ChatOpenAI: 
-        # - model = deployment name (not model name like "gpt-3.5-turbo")
-        # - base_url = azure endpoint
-        # - api_version = azure api version
-        # - openai_api_key = azure key
-        # - azure = True
+        if not azure_endpoint or not azure_deployment or not openai_api_key:
+            raise ValueError(
+                "Azure OpenAI environment variables missing! "
+                "Set OPENAI_API_KEY, OPENAI_API_BASE, and AZURE_OPENAI_DEPLOYMENT_NAME."
+            )
 
         self.llm = ChatOpenAI(
             model=azure_deployment,
             openai_api_key=openai_api_key,
             base_url=azure_endpoint,
-            api_version=azure_api_version,
-            azure=True
         )
         self.prompt = PromptTemplate(
             input_variables=["commits"],
