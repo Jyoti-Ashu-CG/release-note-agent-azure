@@ -1,1 +1,3 @@
 test
+Once you fix this, push the update and your workflow should complete successfully — generating and committing the release notes.
+Want help adding a GitHub release tag or publishing the notes to the Releases page?
