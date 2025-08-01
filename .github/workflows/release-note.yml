@@ -49,3 +49,4 @@ jobs:
             git push
           else
             echo "RELEASE_NOTES.md not found, skipping commit."
+          fi  # ✅ Add this line to close the if block
