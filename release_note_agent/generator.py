@@ -6,7 +6,7 @@ class ReleaseNoteGenerator:
     def __init__(self, model_name=None, openai_api_key=None):
         # Use standard Azure OpenAI environment variables
         azure_endpoint = os.getenv("OPENAI_API_BASE")  # e.g. https://YOUR-RESOURCE.openai.azure.com/
-        azure_deployment = model_name or os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME")
+        azure_deployment = model_name or os.getenv("AZURE_OPENAI_DEPLOYMENT")
         openai_api_key = openai_api_key or os.getenv("OPENAI_API_KEY")
 
         if not azure_endpoint or not azure_deployment or not openai_api_key:
@@ -19,6 +19,7 @@ class ReleaseNoteGenerator:
             model=azure_deployment,
             openai_api_key=openai_api_key,
             base_url=azure_endpoint,
+            api_version=os.getenv("OPENAI_API_VERSION") 
         )
         self.prompt = PromptTemplate(
             input_variables=["commits"],
