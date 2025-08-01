@@ -1,16 +1,20 @@
 # 📝 Release Notes
 
 ## v0.1.0
-Released on: 2025-08-01
+📅 Released on: 2025-08-01
 
-There are no user-facing features, bug fixes, improvements, or documentation changes in this release.  
-A test file was added for internal testing purposes.
+No significant changes to include in this release.
 
 ---
 
-# Release Notes
+**Summary:**  
+This release includes additions related to testing infrastructure with no impact to features, bug fixes, improvements, or documentation.
 
-## 🧪 Internal  
-- Added a test file for improved test coverage.
+- No new features.
+- No bug fixes.
+- No user-facing improvements.
+- No documentation updates.
 
-(No additional user-visible features or changes in this release.)
+*Internal note: A new test file has been added for enhanced test coverage.*
+
+(No user-visible features or changes in this release.)
