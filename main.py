@@ -60,7 +60,7 @@ commit_text = "\n".join(messages)
 
 # Generate release notes
 generator = ReleaseNoteGenerator()
-notes_body = generator.generate(commit_text)
+notes_body = generator.generate(commit_text).content  # ✅ Extract the string content
 
 # Add version and date header
 release_date = datetime.now().strftime("%Y-%m-%d")
