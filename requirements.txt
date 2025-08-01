@@ -1,0 +1,7 @@
+openai
+langchain
+python-dotenv
+pytest
+langchain-community
+langchain-openai
+PyGithub
