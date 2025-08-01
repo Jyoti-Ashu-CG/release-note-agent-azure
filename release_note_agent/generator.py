@@ -14,12 +14,25 @@ class ReleaseNoteGenerator:
                 "Azure OpenAI environment variables missing! "
                 "Set OPENAI_API_KEY, OPENAI_API_BASE, and AZURE_OPENAI_DEPLOYMENT_NAME."
             )
+        
+        required_vars = {
+            "OPENAI_API_KEY": openai_api_key,
+            "OPENAI_API_BASE": azure_endpoint,
+            "AZURE_OPENAI_DEPLOYMENT_NAME": azure_deployment,
+            "OPENAI_API_VERSION": os.getenv("OPENAI_API_VERSION")
+        }
+
+        missing = [key for key, val in required_vars.items() if not val]
+        if missing:
+            raise ValueError(f"Missing required environment variables: {', '.join(missing)}")
+
 
         self.llm = ChatOpenAI(
             model=azure_deployment,
             openai_api_key=openai_api_key,
             base_url=azure_endpoint,
-            api_version=os.getenv("OPENAI_API_VERSION") 
+            model_kwargs={"api_version": os.getenv("OPENAI_API_VERSION")}  # ✅ Correct way
+
         )
         self.prompt = PromptTemplate(
             input_variables=["commits"],
