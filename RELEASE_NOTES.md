@@ -3,10 +3,14 @@
 ## v0.1.0
 Released on: 2025-08-01
 
-No significant user-facing changes in this release.
+There are no user-facing features, bug fixes, improvements, or documentation changes in this release.  
+A test file was added for internal testing purposes.
 
 ---
 
-## 📚 Documentation
+# Release Notes
 
-- Added a new test file to improve test coverage.
+## 🧪 Internal  
+- Added a test file for improved test coverage.
+
+(No additional user-visible features or changes in this release.)
