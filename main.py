@@ -60,16 +60,43 @@ commit_text = "\n".join(messages)
 
 # Generate release notes
 generator = ReleaseNoteGenerator()
-notes_body = generator.generate(commit_text).content  # ✅ Extract the string content
+raw_notes = generator.generate(commit_text).content.strip()
+
+# Remove duplicate header if present
+cleaned_notes = raw_notes.replace("# Release Notes", "").strip()
+
+# Remove empty sections
+sections = ["✨ Features", "🐛 Bug Fixes", "🛠️ Improvements", "📚 Documentation"]
+lines = cleaned_notes.splitlines()
+filtered_lines = []
+skip_next = False
+
+for i, line in enumerate(lines):
+    if any(line.strip().startswith(f"### {s}") for s in sections):
+        # Check if next line is empty or a placeholder
+        next_line = lines[i + 1] if i + 1 < len(lines) else ""
+        if not next_line.strip() or "no changes" in next_line.lower():
+            skip_next = True
+            continue
+    if skip_next:
+        skip_next = False
+        continue
+    filtered_lines.append(line)
+
+final_body = "\n".join(filtered_lines).strip()
+
+# If no user-facing sections remain, add internal-only message
+if not any(s in final_body for s in sections):
+    final_body += "\n\n(No user-visible features or changes in this release.)"
 
 # Add version and date header
 release_date = datetime.now().strftime("%Y-%m-%d")
-header = f"# 📝 Release Notes\n\n## {version}\nReleased on: {release_date}\n\n"
+header = f"# 📝 Release Notes\n\n## {version}\n📅 Released on: {release_date}\n\n"
 
-full_notes = header + notes_body
+full_notes = header + final_body + "\n"
 
 # Save to file
-with open("RELEASE_NOTES.md", "w") as f:
+with open("RELEASE_NOTES.md", "w", encoding="utf-8") as f:
     f.write(full_notes)
 
 print(f"✅ RELEASE_NOTES.md generated for {version} on {release_date}.")
